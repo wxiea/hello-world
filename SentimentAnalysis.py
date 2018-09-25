@@ -26,19 +26,28 @@ def get_text_positive_proba(text):
 
 
 def get_submission_comments(url):
-    submission = reddit.submission(url=url)
+    submission = reddit.submission(url = url)
     submission.comments.replace_more()
 
     return submission.comments
 
+def process_comments(each_obj):
+        for each_reply in each_obj.replies:
+            print(each_reply)
+            process_comments(each_reply)      
 
 def main():
     comments = get_submission_comments('https://www.reddit.com/r/learnprogramming/comments/5w50g5/eli5_what_is_recursion/')
-    print(comments[0].body)
-    print(comments[0].replies[0].body)
+    for i in range(1):
+        for Each in comments:
+            print(Each.body)
+            process_comments(Each)
+        
+   # print(comments[0].body)
+   # print(comments[0].replies[0].body)
 
-    neg = get_text_negative_proba(comments[0].replies[0].body)
+    #neg = get_text_negative_proba(comments[0].replies[0].body)
 
-    print(neg)
+   # print(neg)
 
 main()
